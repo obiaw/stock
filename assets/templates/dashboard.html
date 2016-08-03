@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block head_title %}Dashboard {% endblock %}
+{% block content %}
+
+    <div class="row">
+      <div class="col-md-9 col-sm-4 col-xs-12">
+             <div class="row">
+                 <div class="col-md-4 col-sm-4 col-xs-12">
+                   <div class="x_panel tile  overflow_hidden">
+                       <div class="col-md-3" style="background-color:#3a3; padding:15px; border-radius:10px;color:#fff">
+                           <i class="fa fa-cube fa-3x"></i>
+                       </div>
+                       <div class="col-md-9">
+                           <h4>Total Assets</h4>
+                           <p><b>{{total_assets.count}}</b></p>
+                       </div>
+                   </div>
+                 </div>
+                 <div class="col-md-4 col-sm-4 col-xs-12">
+                   <div class="x_panel tile  overflow_hidden">
+                       <div class="col-md-3" style="background-color:#822; padding:15px; border-radius:10px;color:#fff">
+                           <i class="fa fa-chain-broken fa-3x"></i>
+                       </div>
+                       <div class="col-md-9">
+                           <h4>Total Assets Valuation</h4>
+                           <p><b>${{total_value.price__sum}}</b></p>
+                       </div>
+                   </div>
+                 </div>
+
+                 <div class="col-md-4 col-sm-4 col-xs-12">
+                   <div class="x_panel tile  overflow_hidden">
+                       <div class="col-md-3" style="background-color:#3a3; padding:15px; border-radius:10px;color:#fff">
+                           <i class="fa fa-cubes fa-3x"></i>
+                       </div>
+                       <div class="col-md-9">
+                           <h4>Assets with Zero Value</h4>
+                           <p><b>{{zero}}</b></p>
+                       </div>
+                   </div>
+                 </div>
+            </div>
+            <div class="x_panel tile  overflow_hidden">
+              <div class="x_title">
+                <h2>Asset Distribution</h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                  <div class="col-md-8">
+                      <BR/>
+                      <canvas id="lineChart"></canvas>
+                  </div>
+                  <div class="col-md-4">
+                      <div class="border-left">
+                          <p class="no-margin"><b>Assets per Branch</b> <font color="#aaa"></font></p>
+                          {% if per_branch %}
+                            
+                          
+                           <table class="countries_list">
+                          <tbody>
+                          {% for asset  in  per_branch %}
+                            <tr>
+                              <td>{{asset.location}}</td>
+                              <td class="fs15 fw700 text-right">${{asset.total}}</td>
+                            </tr>
+
+                             {% endfor %}
+
+                          </tbody>
+                        </table>
+                        {% endif %}
+                      <table class="" style="width:96%; margin:auto;">
+
+                  <tr>
+                    <td class="text-primary text-center">Percentage Asset Distribution</td>
+                  </tr>
+                        
+                  <tr>
+                    <td>
+                      <canvas id="canvas1"
+                      style="width: 350px;height: 150px;"></canvas>
+                    </td>
+                  </tr>
+                </table>
+                      </div>
+                  </div>
+              </div>
+            </div>
+           <div class="container-fluid">
+            <div class="clearfix primary"></div>
+            <div class="row">
+             <a href="javascript:;" class="user-profile left" aria-expanded="false">
+              <img src="{% static 'images/img.jpg' %}" alt="">
+            </a>
+                  <div class="col-xs-11">
+                      <p style="margin:0px;"> Edgar<span class="" style="font-size:12px !important; color:#aaa !important; margin-left:20px;">1 day ago</span></p>
+                      <p >Added an Asset <a style="color:#000">CXVT087902993</a></p>
+                  </div></div></div>
+
+          </div><!-- end of col-->
+
+<div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="x_panel tile fixed_height_400">
+              <div class="x_title">
+                <h2>Learning Progress</h2>
+                <ul class="nav navbar-right">
+                  <a><i class="fa fa-question-circle" style="font-size:17px;"></i></a>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+               <div class="col-xs-5">
+
+                   <span class="chart" id="chart_learning" data-percent="16">
+                      <span class="percent" ></span>
+                    </span>
+               </div>
+                  <div class="col-xs-7">
+                      <h4 style="margin:0px;"><b>Beginner</b></h4>
+                      <p>Your Estimated Learning progress.</p>
+                      <a class="btn btn-xs btn-success">Take A Tour</a>
+               </div>
+              </div>
+            </div>
+              <div class="x_panel tile">
+              <div class="x_title">
+                <h2>Asset Approvals</h2>
+                <ul class="nav navbar-right panel_toolbox">
+
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                  <p><i class="fa fa-check-circle fa-2x"></i> <i class="disabled-text">No pending approvals</i></p>
+              </div>
+            </div>
+
+              <div class="x_panel tile">
+              <div class="x_title">
+                <h2>Latest Asset</h2>
+                 <span class="badge bg-red right" style="color:white; font-size:10px !important">1</span>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+               <i class="fa fa-cube fa-2x col-xs-2"></i>
+                  <div class="col-xs-10">
+                      <p style="margin:0px;"><a style="color:#000">SR-902993</a> <span class="" style="font-size:12px !important; color:#aaa !important; margin-left:20px;">10 days ago</span></p>
+                      <p >For Jonathan -  Pineapple Bay</p>
+                  </div>
+              </div>
+            </div>
+
+              <div class="x_panel tile ">
+              <div class="x_title">
+                <h2>Asset entrants</h2>
+                 <span class="badge bg-red right" style="color:white; font-size:10px !important">4</span>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <p><i class="fa fa-info-circle fa-2x"></i> <a class="disabled-text"> &nbsp;Junior, Edgar and 2 others</a></p>
+
+            </div>
+          </div>
+
+
+
+    </div>
+    </div><!---end of row-->
+
+
+{% endblock  %}
